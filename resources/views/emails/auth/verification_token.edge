@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Your Password</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        .logo {
+            margin-bottom: 20px;
+        }
+        .logo img {
+            max-width: 150px;
+        }
+        .header {
+            color: #333;
+            font-size: 22px;
+            font-weight: bold;
+            padding: 15px;
+        }
+        .content {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.5;
+            padding: 15px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #2039df;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 12px 25px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .footer {
+            font-size: 12px;
+            color: #999;
+            padding-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+          <svg width="150" height="18" viewBox="0 0 150 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.088 18V5.04H0.408V0.311999H16.608V5.04H11.928V18H5.088ZM21.0956 18L17.4956 6.576V0.311999H24.3836L25.3196 13.536H26.3036L27.2396 0.311999H32.8556L33.7916 13.536H34.7996L35.7356 0.311999H42.5996V6.576L39.0236 18H31.6796L30.0716 13.896L28.4156 18H21.0956ZM44.2444 18V0.311999H59.6764V5.04H51.0844V7.248H58.6684V11.064H51.0844V13.272H59.6764V18H44.2444ZM61.2197 18V0.311999H75.4277L78.0917 2.592V10.272L76.5557 11.568L78.8837 18H72.1637L70.3637 12.528H68.0597V18H61.2197ZM68.0597 8.856H71.5157V3.984H68.0597V8.856ZM79.6247 18V0.311999H86.4647V6.576L90.5207 0.311999H98.2967L92.2967 8.472L98.1287 18H90.4487L86.4647 10.44V18H79.6247ZM98.7797 18V0.311999H104.972L108.836 8.952V0.311999H114.98V18H108.836L104.948 8.976L104.924 18H98.7797ZM116.669 18V0.311999H132.101V5.04H123.509V7.248H131.093V11.064H123.509V13.272H132.101V18H116.669ZM137.532 18V5.04H132.852V0.311999H149.052V5.04H144.372V18H137.532Z" fill="#FF7FFF"/>
+            </svg>
+        </div>
+        <div class="header">
+            Confirm Your Email
+        </div>
+        <div class="content">
+            <p>Hello, {{ user.fullName }}</p>
+            <p>Welcome to TopBar</p>
+            <p>You can click the button below to confirm your email:</p>
+            <a href="{{ verificationLink }}" class="button">Confirm email</a>
+            <p>If you did not signed up on TopBar, please ignore this email.</p>
+        </div>
+        <div class="footer">
+            <p>© 2025 TopBar. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

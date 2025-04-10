@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  topbar-api:
+    container_name: topbar-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./storage:/var/www/topbar/storage
+    ports:
+      - '7000:7000'
+    environment:
+      NODE_ENV: development
