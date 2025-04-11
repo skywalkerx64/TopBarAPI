@@ -12,6 +12,8 @@ const UsersController = () => import('#controllers/users_controller')
 const MediaController = () => import('#controllers/media_controller')
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+const TrackingsController = () => import('#controllers/trackings_controller')
+const LinksController = () => import('#controllers/links_controller')
 
 //Base
 router.get('/', async () => {
@@ -47,6 +49,14 @@ router
 
 //Main App Routes (Not Protected)
 router
-  .group(() => {})
+  .group(() => {
+    router.get('links', [LinksController, 'index']).as('links.index')
+    router.get('links/:id', [LinksController, 'show']).as('links.show')
+    router.get('links/url/:url', [LinksController, 'showByUrl']).as('links.show-by-url')
+    router.put('links/:id', [LinksController, 'update']).as('links.update')
+    router.post('track/link/:id', [TrackingsController, 'track']).as('links.track')
+    router.get('links/:id/stats', [LinksController, 'stats']).as('links.stats')
+    router.get('links/tracks/:id', [LinksController, 'tracks']).as('links.tracks')
+  })
   .prefix('api')
   .as('api')
