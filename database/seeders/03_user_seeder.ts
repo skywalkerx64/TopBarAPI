@@ -1,6 +1,7 @@
 import Role from '#models/role'
 import User from '#models/user'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
+import { DateTime } from 'luxon'
 
 export default class extends BaseSeeder {
   async run() {
@@ -20,7 +21,7 @@ export default class extends BaseSeeder {
     for (const user of users) {
       const newUser = await User.create(user.data)
 
-      await newUser.merge({ emailVerifiedAt: new Date() }).save()
+      await newUser.merge({ emailVerifiedAt: DateTime.now() }).save()
 
       const roleIds = roles.filter((role) => user.roles.includes(role.alias)).map((role) => role.id)
 

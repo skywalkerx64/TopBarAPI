@@ -9,13 +9,9 @@ import {
 } from '#validators/auth/auth'
 import type { HttpContext } from '@adonisjs/core/http'
 import { DateTime } from 'luxon'
-// import emitter from '@adonisjs/core/services/emitter'
 import hash from '@adonisjs/core/services/hash'
 import mail from '@adonisjs/mail/services/main'
 import { randomInt } from 'node:crypto'
-import Role from '#models/role'
-import { generateUserToken } from '#services/stream'
-import Customer from '#models/customer'
 export default class AuthController {
   async register({ request, response }: HttpContext) {
     const data = await request.validateUsing(registerValidator)
@@ -24,25 +20,11 @@ export default class AuthController {
       fullName: data.fullName,
       username: data.username,
       email: data.email,
-      phoneNumber: data.phoneNumber,
       password: data.password,
     })
 
-    const customerRole = await Role.findBy('alias', Role.CUSTOMER_ROLE_ALIAS)
-    if (customerRole) await user.related('roles').attach([customerRole.id])
-
-    //Verify if customer model exists
-    const customer = await Customer.findBy('userId', user.id)
-    if (!customer)
-      await Customer.create({
-        userId: user.id,
-        email: user.email,
-        name: user.fullName,
-        contact: user.phoneNumber,
-      })
-
     const code = randomInt(1000, 9999)
-    await user.merge({ verificationToken: code, verificationTokenExpiresAt: null }).save()
+    await user.merge({ verificationToken: String(code), verificationTokenExpiresAt: null }).save()
 
     const verificationLink =
       process.env.FRONTEND_URL +
@@ -71,16 +53,9 @@ export default class AuthController {
 
     const token = await User.accessTokens.create(user)
 
-    //Generate user stream token
-
-    const streamToken = await generateUserToken(user.id)
-
-    await user.merge({ streamToken: streamToken }).save()
-
     return {
       message: 'Logged in',
       token: token.value?.release(),
-      streamToken: streamToken,
       user: user.toJSON(),
     }
   }
@@ -138,7 +113,7 @@ export default class AuthController {
       .merge({
         verificationToken: null,
         verificationTokenExpiresAt: null,
-        emailVerifiedAt: new Date(),
+        emailVerifiedAt: DateTime.now(),
       })
       .save()
 
@@ -156,7 +131,7 @@ export default class AuthController {
 
     await user
       .merge({
-        verificationToken: code,
+        verificationToken: String(code),
         verificationTokenExpiresAt: expirationTime, // Définir l'expiration du code
       })
       .save()

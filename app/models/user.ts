@@ -64,35 +64,4 @@ export default class User extends compose(BaseModel, AuthFinder) {
     }
     return false
   }
-
-  async hasRole(roleAlias: string) {
-    await this.load('roles')
-    return this.roles?.map((role) => role.alias).includes(roleAlias)
-  }
-
-  async hasStrictRoles(roleAliases: Array<string>) {
-    await this.load('roles')
-    const userRoleAliases = this.roles?.map((role) => role.alias)
-    let hasRole = true
-    for (const roleAlias of roleAliases) {
-      if (!userRoleAliases.includes(roleAlias)) {
-        hasRole = false
-        break
-      }
-    }
-    return hasRole
-  }
-
-  async hasRoles(roleAliases: Array<string>) {
-    await this.load('roles')
-    const userRoleAliases = this.roles?.map((role) => role.alias)
-    let hasRole = false
-    for (const roleAlias of roleAliases) {
-      if (userRoleAliases.includes(roleAlias)) {
-        hasRole = true
-        break
-      }
-    }
-    return hasRole
-  }
 }
