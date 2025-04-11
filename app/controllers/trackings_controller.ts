@@ -6,6 +6,8 @@ export default class TrackingsController {
     const ip = request.ip()
     const linkId = params.id
 
+    console.log(`Tracking link: ${linkId} from IP: ${ip}`)
+
     // Here you would typically save the tracking information to a database
     await Tracking.create({ linkId: linkId, ip })
 
